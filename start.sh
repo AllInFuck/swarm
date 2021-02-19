@@ -49,14 +49,13 @@ initNode() {
   sleep 3
   #写入地址
   ethAddress=$(cat $logFile | grep "using ethereum address" | awk '{print $6}')
-  echo '以太坊地址：'??eth??0x${ethAddress}??eth??
+  echo '以太坊地址：'ethetheth0x${ethAddress}ethetheth
   echo "$ethAddress" >$ethAddressFile/$nodeName
   peerAddress=$(cat $logFile | grep "using swarm network address through clef" | awk '{print $9}')
-  echo '节点地址：'**peerAddress**${peerAddress}**peerAddress**
+  echo '节点地址：'peerpeerpeer${peerAddress}peerpeerpeer
   echo "$peerAddress" >$peerAddressFile/$nodeName
 }
 
 #杀掉之前的进程
 #ps -ef | grep ${nodeName} | grep -v grep | awk '{print $2}' | xargs kill -9
-
 initNode
