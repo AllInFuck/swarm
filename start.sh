@@ -16,6 +16,7 @@ if [ x"$1" != x ]; then
 fi
 
 initNode() {
+  echo $nodeNum
   logFile=${logBasePath}/node1.file
   nohup bee start \
     --verbosity 5 \
