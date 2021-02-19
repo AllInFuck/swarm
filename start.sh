@@ -3,8 +3,8 @@ beePath='/opt/bee'
 passFile='/opt/bee/beePass.txt'
 dataBasePath='/opt/beeData'
 logBasePath='/opt/beeLogs'
-ethAddressFile='$beePath/ethAddress'
-peerAddressFile='$beePath/peerAddress'
+ethAddressFile=$beePath/ethAddress
+peerAddressFile=$beePath/peerAddress
 
 mkdir -p $logBasePath
 mkdir -p $ethAddressFile
