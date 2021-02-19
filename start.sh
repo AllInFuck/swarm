@@ -58,4 +58,5 @@ initNode() {
 
 #杀掉之前的进程
 #ps -ef | grep ${nodeName} | grep -v grep | awk '{print $2}' | xargs kill -9
+
 initNode
