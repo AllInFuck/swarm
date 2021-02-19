@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 beePath='/opt/bee'
 passFile='/opt/bee/beePass.txt'
-dataBasePath='/opt/beeData/'
-logBasePath='/opt/beeLogs/'
+dataBasePath='/opt/beeData'
+logBasePath='/opt/beeLogs'
+
+mkdir -p $logBasePath
+
 
 nodeNum=8
 if [ x"$1" != x ]; then
@@ -22,7 +25,7 @@ nohup bee start \
   --debug-api-enable \
   --clef-signer-enable \
   --clef-signer-endpoint /var/lib/bee-clef/clef.ipc \
-  > ${logBasePath}node1.file 2>&1 &
+  > ${logBasePath}/node1.file 2>&1 &
 }
 
 initNode
