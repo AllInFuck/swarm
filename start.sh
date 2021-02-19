@@ -34,9 +34,9 @@ initNode() {
   logFile=${logBasePath}/$nodeName
   nohup bee start \
     --verbosity 3 \
-    --api-addr ${api_addr} \
-    --p2p-addr ${p2p_addr} \
-    --debug-api-addr ${debug_addr} \
+    --api-addr :${api_addr} \
+    --p2p-addr :${p2p_addr} \
+    --debug-api-addr :${debug_addr} \
     --data-dir ${dataBasePath}/$nodeName \
     --password-file $passFile \
     --cors-allowed-origins "*" \
