@@ -52,7 +52,7 @@ initNode() {
   echo '以太坊地址：'$ethAddress
   echo "$ethAddress" >$ethAddressFile/$nodeName
   peerAddress=$(cat $logFile | grep "using swarm network address through clef" | awk '{print $9}')
-  echo '节点地址：'+$peerAddress
+  echo '节点地址：'$peerAddress
   echo "$peerAddress" >$peerAddressFile/$nodeName
 }
 
