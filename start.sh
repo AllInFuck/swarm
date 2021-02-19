@@ -34,8 +34,10 @@ initNode() {
   sleep 3
   #写入地址
   ethAddress=$(cat $logFile | grep "using ethereum address" | awk '{print $6}')
+  echo $ethAddress
   echo "$ethAddress" >>ethAddressFile/node1
   peerAddress=$(cat node1.file | grep "using swarm network address through clef" | awk '{print $9}')
+  echo peerAddress
   echo "$peerAddress" >>peerAddressFile/node1
 }
 
