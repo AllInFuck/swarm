@@ -9,37 +9,31 @@ mkdir -p $logBasePath
 mkdir -p $ethAddressFile
 mkdir -p $peerAddressFile
 
-#启动的节点数
+#api-addr 1633
 if [ x"$1" = x ]; then
   exit 0
 fi
-#api-addr
+#p2p-addr 1634
 if [ x"$2" = x ]; then
   exit 0
 fi
-#p2p-addr
+#debug-api-addr 1635
 if [ x"$3" = x ]; then
   exit 0
 fi
-#debug-api-addr
+#name node1
 if [ x"$4" = x ]; then
   exit 0
 fi
-#name
-if [ x"$5" = x ]; then
-  exit 0
-fi
-nodeNum=$1
-api_addr=$2
-p2p_addr=$3
-debug_addr=$4
-nodeName=$5
+api_addr=$1
+p2p_addr=$2
+debug_addr=$3
+nodeName=$4
 
 initNode() {
-  echo $nodeNum
   logFile=${logBasePath}/$nodeName
   nohup bee start \
-    --verbosity 5 \
+    --verbosity 3 \
     --api-addr ${api_addr} \
     --p2p-addr ${p2p_addr} \
     --debug-api-addr ${debug_addr} \
@@ -55,11 +49,11 @@ initNode() {
   sleep 3
   #写入地址
   ethAddress=$(cat $logFile | grep "using ethereum address" | awk '{print $6}')
-  echo $ethAddress
-  echo "$ethAddress" >$ethAddressFile/node1
+  echo '以太坊地址：'$ethAddress
+  echo "$ethAddress" >$ethAddressFile/$nodeName
   peerAddress=$(cat $logFile | grep "using swarm network address through clef" | awk '{print $9}')
-  echo peerAddress
-  echo "$peerAddress" >$peerAddressFile/node1
+  echo '节点地址：'+$peerAddress
+  echo "$peerAddress" >$peerAddressFile/$nodeName
 }
 
 initNode
