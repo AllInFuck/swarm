@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-passFile='/opt/bee/beePass.txt'
 dataBasePath='/opt/beeData'
 logBasePath='/opt/beeLogs'
 ethAddressFile='/opt/bee/ethAddress'
@@ -29,6 +28,12 @@ api_addr=$1
 p2p_addr=$2
 debug_addr=$3
 nodeName=$4
+passFile='/opt/bee/'${nodeName}.pass
+
+initPass() {
+  random=$(openssl rand -base64 24)
+  echo "$random" >$passFile
+}
 
 initNode() {
   logFile=${logBasePath}/$nodeName
@@ -58,4 +63,5 @@ initNode() {
 
 #杀掉之前的进程
 #ps -ef | grep ${nodeName} | grep -v grep | awk '{print $2}' | xargs kill -9
+initPass
 initNode
