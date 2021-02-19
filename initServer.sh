@@ -27,7 +27,7 @@ installBeeClient() {
 initPass() {
   mkdir -p /opt/bee
   random=$(openssl rand -base64 24)
-  echo "$random" >>$passFile
+  echo "$random" > $passFile
 }
 
 initCashOutSh() {
