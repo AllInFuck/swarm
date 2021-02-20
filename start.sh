@@ -28,6 +28,7 @@ api_addr=$1
 p2p_addr=$2
 debug_addr=$3
 nodeName=$4
+
 passFile='/opt/bee/'${nodeName}.pass
 
 initPass() {
