@@ -3,7 +3,7 @@ dataBasePath='/opt/beeData'
 logBasePath='/opt/beeLogs'
 ethAddressFile='/opt/bee/ethAddress'
 peerAddressFile='/opt/bee/peerAddress'
-
+randomPass=''
 mkdir -p $logBasePath
 mkdir -p $ethAddressFile
 mkdir -p $peerAddressFile
@@ -32,8 +32,8 @@ nodeName=$4
 passFile='/opt/bee/'${nodeName}.pass
 
 initPass() {
-  random=$(openssl rand -base64 24)
-  echo "$random" >$passFile
+  randomPass=$(openssl rand -base64 24)
+  echo "$randomPass" >$passFile
 }
 
 initNode() {
@@ -60,6 +60,8 @@ initNode() {
   peerAddress=$(cat $logFile | grep "using swarm network address through clef" | awk '{print $9}')
   echo '节点地址：'peerpeerpeer${peerAddress}peerpeerpeer
   echo "$peerAddress" >$peerAddressFile/$nodeName
+  #密码
+  echo '节点密码：'passpasspass${randomPass}passpasspass
 }
 
 #杀掉之前的进程
