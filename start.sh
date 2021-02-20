@@ -4,6 +4,7 @@ logBasePath='/opt/beeLogs'
 ethAddressFile='/opt/bee/ethAddress'
 peerAddressFile='/opt/bee/peerAddress'
 randomPass=''
+capacity="20000000"
 mkdir -p $logBasePath
 mkdir -p $ethAddressFile
 mkdir -p $peerAddressFile
@@ -23,6 +24,11 @@ fi
 #name node1
 if [ x"$4" = x ]; then
   exit 0
+fi
+
+#--db-capacity
+if [ x"$5" != x ]; then
+  capacity=$5
 fi
 api_addr=$1
 p2p_addr=$2
@@ -45,6 +51,7 @@ initNode() {
     --debug-api-addr :${debug_addr} \
     --data-dir ${dataBasePath}/$nodeName \
     --password-file $passFile \
+    --db-capacity $capacity \
     --cors-allowed-origins "*" \
     --swap-endpoint https://goerli.infura.io/v3/40ace318b48b4a7da4694e5e4863f8d0 \
     --debug-api-enable \
