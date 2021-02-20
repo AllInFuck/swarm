@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 beePath='/opt/bee'
 
+mkdir -p $beePath
+
 update() {
   echo '开始更新'
   apt update
