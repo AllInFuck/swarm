@@ -1,12 +1,7 @@
 #!/usr/bin/env sh
 dataBasePath='/opt/beeData'
 logBasePath='/opt/beeLogs'
-ethAddressFile='/opt/bee/ethAddress'
-peerAddressFile='/opt/bee/peerAddress'
 capacity="20000000"
-mkdir -p $logBasePath
-mkdir -p $ethAddressFile
-mkdir -p $peerAddressFile
 
 #api-addr 1633
 if [ x"$1" = x ]; then
