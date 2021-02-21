@@ -45,7 +45,7 @@ passFile='/opt/bee/'${nodeName}.pass
 
 initPass() {
   randomPass=$(openssl rand -base64 24)
-  sudo echo "$randomPass" | tee $passFile
+  echo "$randomPass" | sudo tee $passFile
 }
 
 initNode() {
@@ -62,17 +62,16 @@ initNode() {
     --swap-endpoint $swapEndpoint \
     --debug-api-enable \
     --clef-signer-enable \
-    --clef-signer-endpoint /var/lib/bee-clef/clef.ipc \
-    | $logFile 2>&1 &
+    --clef-signer-endpoint /var/lib/bee-clef/clef.ipc | $logFile 2>&1 &
 
   sleep 3
   #写入地址
   ethAddress=$(cat $logFile | grep "using ethereum address" | awk '{print $6}')
   echo '以太坊地址：'ethetheth0x${ethAddress}ethetheth
-  sudo echo "$ethAddress" | tee $ethAddressFile/$nodeName
+  sudo echo "$ethAddress" | sudo tee $ethAddressFile/$nodeName
   peerAddress=$(cat $logFile | grep "using swarm network address through clef" | awk '{print $9}')
   echo '节点地址：'peerpeerpeer${peerAddress}peerpeerpeer
-  sudo echo "$peerAddress" | tee $peerAddressFile/$nodeName
+  sudo echo "$peerAddress" | sudo tee $peerAddressFile/$nodeName
   #密码
   echo '节点密码：'passpasspass${randomPass}passpasspass
 }
