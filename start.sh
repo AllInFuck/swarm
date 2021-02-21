@@ -50,7 +50,7 @@ initPass() {
 
 initNode() {
   logFile=${logBasePath}/$nodeName
-  nohup start \
+  nohup bee start \
     --verbosity 3 \
     --api-addr :${api_addr} \
     --p2p-addr :${p2p_addr} \
