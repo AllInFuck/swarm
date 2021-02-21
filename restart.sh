@@ -40,13 +40,13 @@ swapEndpoint=$6
 
 passFile='/opt/bee/'${nodeName}.pass
 
-killOld(){
+killOld() {
   ps -ef | grep ${nodeName} | grep -v grep | awk '{print $2}' | xargs kill -9
 }
 
 initNode() {
   logFile=${logBasePath}/$nodeName
-  nohup bee start \
+  sudo nohup bee start \
     --verbosity 3 \
     --api-addr :${api_addr} \
     --p2p-addr :${p2p_addr} \
