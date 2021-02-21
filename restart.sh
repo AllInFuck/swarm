@@ -59,5 +59,5 @@ initNode() {
 }
 
 #杀掉之前的进程
-killOld
+#killOld
 initNode
