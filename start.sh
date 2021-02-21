@@ -5,9 +5,9 @@ ethAddressFile='/opt/bee/ethAddress'
 peerAddressFile='/opt/bee/peerAddress'
 randomPass=''
 capacity="20000000"
-sudo mkdir -p $logBasePath
-sudo mkdir -p $ethAddressFile
-sudo mkdir -p $peerAddressFile
+mkdir -p $logBasePath
+mkdir -p $ethAddressFile
+mkdir -p $peerAddressFile
 
 #api-addr 1633
 if [ x"$1" = x ]; then
@@ -45,12 +45,12 @@ passFile='/opt/bee/'${nodeName}.pass
 
 initPass() {
   randomPass=$(openssl rand -base64 24)
-  echo "$randomPass" | sudo tee $passFile
+  echo "$randomPass" >$passFile
 }
 
 initNode() {
   logFile=${logBasePath}/$nodeName
-  sudo nohup bee start \
+  nohup bee start \
     --verbosity 3 \
     --api-addr :${api_addr} \
     --p2p-addr :${p2p_addr} \
@@ -62,16 +62,17 @@ initNode() {
     --swap-endpoint $swapEndpoint \
     --debug-api-enable \
     --clef-signer-enable \
-    --clef-signer-endpoint /var/lib/bee-clef/clef.ipc | $logFile 2>&1 &
+    --clef-signer-endpoint /var/lib/bee-clef/clef.ipc \
+    >$logFile 2>&1 &
 
   sleep 3
   #写入地址
   ethAddress=$(cat $logFile | grep "using ethereum address" | awk '{print $6}')
   echo '以太坊地址：'ethetheth0x${ethAddress}ethetheth
-  sudo echo "$ethAddress" | sudo tee $ethAddressFile/$nodeName
+  echo "$ethAddress" >$ethAddressFile/$nodeName
   peerAddress=$(cat $logFile | grep "using swarm network address through clef" | awk '{print $9}')
   echo '节点地址：'peerpeerpeer${peerAddress}peerpeerpeer
-  sudo echo "$peerAddress" | sudo tee $peerAddressFile/$nodeName
+  echo "$peerAddress" >$peerAddressFile/$nodeName
   #密码
   echo '节点密码：'passpasspass${randomPass}passpasspass
 }
