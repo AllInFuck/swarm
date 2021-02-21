@@ -30,10 +30,16 @@ fi
 if [ x"$5" != x ]; then
   capacity=$5
 fi
+# --swap-endpoint
+if [ x"$6" = x ]; then
+  exit 0
+fi
 api_addr=$1
 p2p_addr=$2
 debug_addr=$3
 nodeName=$4
+#--swap-endpoint https://goerli.infura.io/v3/40ace318b48b4a7da4694e5e4863f8d0 \
+swapEndpoint=$6
 
 passFile='/opt/bee/'${nodeName}.pass
 
@@ -53,7 +59,7 @@ initNode() {
     --password-file $passFile \
     --db-capacity $capacity \
     --cors-allowed-origins "*" \
-    --swap-endpoint https://goerli.infura.io/v3/40ace318b48b4a7da4694e5e4863f8d0 \
+    --swap-endpoint $swapEndpoint \
     --debug-api-enable \
     --clef-signer-enable \
     --clef-signer-endpoint /var/lib/bee-clef/clef.ipc \
