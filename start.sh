@@ -65,7 +65,7 @@ initNode() {
     --clef-signer-endpoint /var/lib/bee-clef/clef.ipc \
     >$logFile 2>&1 &
 
-  sleep 3
+  sleep 10
   #写入地址
   ethAddress=$(cat $logFile | grep "using ethereum address" | awk '{print $6}')
   echo '以太坊地址：'ethetheth0x${ethAddress}ethetheth
