@@ -54,7 +54,6 @@ initNode() {
     --data-dir ${dataBasePath}/$nodeName \
     --password-file $passFile \
     --db-capacity $capacity \
-    --cors-allowed-origins "*" \
     --swap-endpoint $swapEndpoint \
     --debug-api-enable \
     --clef-signer-enable \
