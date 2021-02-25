@@ -62,7 +62,7 @@ initNode() {
     >$logFile 2>&1 &
 }
 
-service vee-clef restart
+service bee-clef restart
 #杀掉之前的进程
 killOld
 initNode
