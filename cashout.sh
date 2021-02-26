@@ -10,7 +10,7 @@ getPeers() {
 getCumulativePayout() {
   peer=$1
   cumulativePayout=$(curl -s "$DEBUG_API/chequebook/cheque/$peer" | jq '.lastreceived.payout')
-  if [ $cumulativePayout == null ]; then
+  if [ $cumulativePayout = null ]; then
     echo 0
   else
     echo $cumulativePayout
@@ -20,7 +20,7 @@ getCumulativePayout() {
 getLastCashedPayout() {
   peer=$1
   cashout=$(curl -s "$DEBUG_API/chequebook/cashout/$peer" | jq '.cumulativePayout')
-  if [ $cashout == null ]; then
+  if [ $cashout = null ]; then
     echo 0
   else
     echo $cashout
@@ -30,7 +30,7 @@ getLastCashedPayout() {
 getUncashedAmount() {
   peer=$1
   cumulativePayout=$(getCumulativePayout $peer)
-  if [ $cumulativePayout == 0 ]; then
+  if [ $cumulativePayout = 0 ]; then
     echo 0
     return
   fi
@@ -48,7 +48,7 @@ cashout() {
   echo cashing out cheque for $peer in transaction $txHash >&2
 
   result="$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)"
-  while ([ "$result" == "null" ] && [ $count -lt 3 ]); do
+  while ([ "$result" = "null" ] && [ $count -lt 3 ]); do
     count=$(expr $count + 1)
     sleep 5
     result=$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)
@@ -59,7 +59,7 @@ cashoutAll() {
   minAmount=$1
   for peer in $(getPeers); do
     uncashedAmount=$(getUncashedAmount $peer)
-    if (("$uncashedAmount" > $minAmount)); then
+    if ([ "$uncashedAmount" -gt $minAmount ]); then
       echo "uncashed cheque for $peer ($uncashedAmount uncashed)" >&2
       cashout $peer
     fi
@@ -69,7 +69,7 @@ cashoutAll() {
 listAllUncashed() {
   for peer in $(getPeers); do
     uncashedAmount=$(getUncashedAmount $peer)
-    if (("$uncashedAmount" > 0)); then
+    if ([ "$uncashedAmount" -gt 0 ]); then
       echo $peer $uncashedAmount
     fi
   done
