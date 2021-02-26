@@ -36,7 +36,7 @@ getUncashedAmount() {
   fi
 
   cashedPayout=$(getLastCashedPayout $peer)
-  let uncashedAmount=$cumulativePayout-$cashedPayout
+  uncashedAmount=$cumulativePayout-$cashedPayout
   echo $uncashedAmount
 }
 
