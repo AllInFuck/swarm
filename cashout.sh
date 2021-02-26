@@ -1,13 +1,13 @@
-#!/bin/bash
+#!/bin/dash
 
 DEBUG_API=http://localhost:1635
 MIN_AMOUNT=1000
 
-function getPeers() {
+getPeers() {
   curl -s "$DEBUG_API/chequebook/cheque" | jq -r '.lastcheques | .[].peer'
 }
 
-function getCumulativePayout() {
+getCumulativePayout() {
   local peer=$1
   local cumulativePayout=$(curl -s "$DEBUG_API/chequebook/cheque/$peer" | jq '.lastreceived.payout')
   if [ $cumulativePayout == null ]; then
@@ -17,7 +17,7 @@ function getCumulativePayout() {
   fi
 }
 
-function getLastCashedPayout() {
+getLastCashedPayout() {
   local peer=$1
   local cashout=$(curl -s "$DEBUG_API/chequebook/cashout/$peer" | jq '.cumulativePayout')
   if [ $cashout == null ]; then
@@ -27,7 +27,7 @@ function getLastCashedPayout() {
   fi
 }
 
-function getUncashedAmount() {
+getUncashedAmount() {
   local peer=$1
   local cumulativePayout=$(getCumulativePayout $peer)
   if [ $cumulativePayout == 0 ]; then
@@ -40,7 +40,7 @@ function getUncashedAmount() {
   echo $uncashedAmount
 }
 
-function cashout() {
+cashout() {
   local peer=$1
   local count=1
   txHash=$(curl -s -XPOST "$DEBUG_API/chequebook/cashout/$peer" | jq -r .transactionHash)
@@ -55,7 +55,7 @@ function cashout() {
   done
 }
 
-function cashoutAll() {
+cashoutAll() {
   local minAmount=$1
   for peer in $(getPeers); do
     local uncashedAmount=$(getUncashedAmount $peer)
@@ -66,7 +66,7 @@ function cashoutAll() {
   done
 }
 
-function listAllUncashed() {
+listAllUncashed() {
   for peer in $(getPeers); do
     local uncashedAmount=$(getUncashedAmount $peer)
     if (("$uncashedAmount" > 0)); then
