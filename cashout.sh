@@ -1,75 +1,74 @@
-#!/usr/bin/env sh
-
+#1/usr/bin/env sh
 DEBUG_API=http://localhost:1635
 MIN_AMOUNT=1000
 
-getPeers() {
+function getPeers() {
   curl -s "$DEBUG_API/chequebook/cheque" | jq -r '.lastcheques | .[].peer'
 }
 
-getCumulativePayout() {
-  peer=$1
-  cumulativePayout=$(curl -s "$DEBUG_API/chequebook/cheque/$peer" | jq '.lastreceived.payout')
-  if [ $cumulativePayout = null ]; then
+function getCumulativePayout() {
+  local peer=$1
+  local cumulativePayout=$(curl -s "$DEBUG_API/chequebook/cheque/$peer" | jq '.lastreceived.payout')
+  if [ $cumulativePayout == null ]; then
     echo 0
   else
     echo $cumulativePayout
   fi
 }
 
-getLastCashedPayout() {
-  peer=$1
-  cashout=$(curl -s "$DEBUG_API/chequebook/cashout/$peer" | jq '.cumulativePayout')
-  if [ $cashout = null ]; then
+function getLastCashedPayout() {
+  local peer=$1
+  local cashout=$(curl -s "$DEBUG_API/chequebook/cashout/$peer" | jq '.cumulativePayout')
+  if [ $cashout == null ]; then
     echo 0
   else
     echo $cashout
   fi
 }
 
-getUncashedAmount() {
-  peer=$1
-  cumulativePayout=$(getCumulativePayout $peer)
-  if [ $cumulativePayout = 0 ]; then
+function getUncashedAmount() {
+  local peer=$1
+  local cumulativePayout=$(getCumulativePayout $peer)
+  if [ $cumulativePayout == 0 ]; then
     echo 0
     return
   fi
 
   cashedPayout=$(getLastCashedPayout $peer)
-  uncashedAmount=$cumulativePayout-$cashedPayout
+  let uncashedAmount=$cumulativePayout-$cashedPayout
   echo $uncashedAmount
 }
 
-cashout() {
-  peer=$1
-  count=1
+function cashout() {
+  local peer=$1
+  local count=1
   txHash=$(curl -s -XPOST "$DEBUG_API/chequebook/cashout/$peer" | jq -r .transactionHash)
 
   echo cashing out cheque for $peer in transaction $txHash >&2
 
   result="$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)"
-  while ([ "$result" = "null" ] && [ $count -lt 3 ]); do
+  while ([ "$result" == "null" ] && [ $count -lt 3 ]); do
     count=$(expr $count + 1)
     sleep 5
     result=$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)
   done
 }
 
-cashoutAll() {
-  minAmount=$1
+function cashoutAll() {
+  local minAmount=$1
   for peer in $(getPeers); do
-    uncashedAmount=$(getUncashedAmount $peer)
-    if [ "$uncashedAmount" -gt $minAmount ]; then
+    local uncashedAmount=$(getUncashedAmount $peer)
+    if (("$uncashedAmount" > $minAmount)); then
       echo "uncashed cheque for $peer ($uncashedAmount uncashed)" >&2
       cashout $peer
     fi
   done
 }
 
-listAllUncashed() {
+function listAllUncashed() {
   for peer in $(getPeers); do
-    uncashedAmount=$(getUncashedAmount $peer)
-    if [ "$uncashedAmount" -gt 0 ]; then
+    local uncashedAmount=$(getUncashedAmount $peer)
+    if (("$uncashedAmount" > 0)); then
       echo $peer $uncashedAmount
     fi
   done
