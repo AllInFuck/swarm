@@ -59,7 +59,7 @@ cashoutAll() {
   minAmount=$1
   for peer in $(getPeers); do
     uncashedAmount=$(getUncashedAmount $peer)
-    if ([ "$uncashedAmount" -gt $minAmount ]); then
+    if [ "$uncashedAmount" -gt $minAmount ]; then
       echo "uncashed cheque for $peer ($uncashedAmount uncashed)" >&2
       cashout $peer
     fi
@@ -69,7 +69,7 @@ cashoutAll() {
 listAllUncashed() {
   for peer in $(getPeers); do
     uncashedAmount=$(getUncashedAmount $peer)
-    if ([ "$uncashedAmount" -gt 0 ]); then
+    if [ "$uncashedAmount" -gt 0 ]; then
       echo $peer $uncashedAmount
     fi
   done
