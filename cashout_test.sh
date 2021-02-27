@@ -57,12 +57,14 @@ function cashout() {
   done
   #调用cashout记录接口
   if [ "$result" != "null" ]; then
+    echo 'cashout success ......'
     #cashshout成功后重置1
     null_count=1
     curl -s http://78.47.165.17:8003/swarmApi/cashout/$result
   fi
   #连续超过10次null直接重启节点吧
   if [[ $null_count -gt 5 ]]; then
+    echo 'restart node ......'
     curl -s http://78.47.165.17:8003/swarmApi/restart
   fi
 }
