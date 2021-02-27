@@ -1,7 +1,7 @@
 #1/usr/bin/env sh
 DEBUG_API=http://localhost:1635
 MIN_AMOUNT=1000
-null_count=0
+null_count=1
 
 function getPeers() {
   curl -s "$DEBUG_API/chequebook/cheque" | jq -r '.lastcheques | .[].peer'
@@ -57,8 +57,8 @@ function cashout() {
   done
   #调用cashout记录接口
   if [ "$result" != "null" ]; then
-    #cashshout成功后重置0
-    null_count=0
+    #cashshout成功后重置1
+    null_count=1
     crul -s http://78.47.165.17:8003/swarmApi/cashout/$result
     echo 0
   fi
