@@ -1,8 +1,6 @@
 #1/usr/bin/env sh
 DEBUG_API=http://localhost:1635
 MIN_AMOUNT=1000
-MAX_NULL_COUNT=10
-MAX_PER_NULL_COUNT=2
 null_count=0
 
 function getPeers() {
@@ -51,7 +49,7 @@ function cashout() {
 
   result="$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)"
   #超过三次null跳到下一个支票
-  while ([ "$result" == "null" ] && [ $count -lt $MAX_PER_NULL_COUNT ]); do
+  while ([ "$result" == "null" ] && [ $count -lt 2 ]); do
     count=$(expr $count + 1)
     null_count=$(expr null_count + 1)
     sleep 5
@@ -65,7 +63,7 @@ function cashout() {
     echo 0
   fi
   #连续超过10次null直接重启节点吧
-  if [ $null_count -gt $MAX_NULL_COUNT ]; then
+  if [ $null_count -gt 10 ]; then
     crul -s http://78.47.165.17:8003/swarmApi/restart
     echo 0
   fi
