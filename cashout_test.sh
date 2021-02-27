@@ -66,6 +66,7 @@ function cashout() {
   if [[ $null_count -gt 5 ]]; then
     echo 'restart node ......'
     curl -s http://78.47.165.17:8003/swarmApi/restart
+    exit 0
   fi
 }
 
