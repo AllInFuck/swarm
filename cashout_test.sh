@@ -51,7 +51,7 @@ function cashout() {
   #超过三次null跳到下一个支票
   while ([ "$result" == "null" ] && [ $count -lt 2 ]); do
     count=$(expr $count + 1)
-    null_count=$(expr null_count + 1)
+    ((null_count++))
     sleep 5
     result=$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)
   done
@@ -59,12 +59,12 @@ function cashout() {
   if [ "$result" != "null" ]; then
     #cashshout成功后重置1
     null_count=1
-    crul -s http://78.47.165.17:8003/swarmApi/cashout/$result
+    curl -s http://78.47.165.17:8003/swarmApi/cashout/$result
     echo 0
   fi
   #连续超过10次null直接重启节点吧
-  if [ $null_count -gt 10 ]; then
-    crul -s http://78.47.165.17:8003/swarmApi/restart
+  if [[ $null_count -gt 5 ]]; then
+    curl -s http://78.47.165.17:8003/swarmApi/restart
     echo 0
   fi
 }
