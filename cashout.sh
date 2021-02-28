@@ -79,6 +79,9 @@ cashout)
   cashout $2
   ;;
 cashout-all)
+  echo 0
+  ;;
+cashout-all1)
   cashoutAll $MIN_AMOUNT
   ;;
 list-uncashed | *)
