@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 使用方法: ./minio-upload /swarm/192.168.1.1 swarm.tar.gz 用户名 密码 swarm.minio.liulh.top
+# 使用方法: ./minio-upload /swarm/192.168.1.1 swarm.tar.gz 用户名 密码 swarm.minio.liulh.top /opt/swarm.tar.gz
 
 #bucket
 path=$1
@@ -8,11 +8,12 @@ file=$2
 s3_key=$3
 s3_secret=$4
 host=$5
+filePath=$6
 
 resource="${path}/${file}"
 content_type="application/octet-stream"
 date=$(date -R)
-_signature="PUT\n\n${content_type}\n${date}\n${resource}"
+_signature="PUT\n\n${content_type}\n${date}\n${filePath}"
 signature=$(echo -en ${_signature} | openssl sha1 -hmac ${s3_secret} -binary | base64)
 
 curl -X PUT -T "${file}" \
