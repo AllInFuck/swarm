@@ -13,10 +13,10 @@ filePath=$6
 resource="${path}/${file}"
 content_type="application/octet-stream"
 date=$(date -R)
-_signature="PUT\n\n${content_type}\n${date}\n${filePath}"
+_signature="PUT\n\n${content_type}\n${date}\n${file}"
 signature=$(echo -en ${_signature} | openssl sha1 -hmac ${s3_secret} -binary | base64)
 
-curl -X PUT -T "${file}" \
+curl -X PUT -T "${filePath}" \
   -H "Host: $host" \
   -H "Date: ${date}" \
   -H "Content-Type: ${content_type}" \
