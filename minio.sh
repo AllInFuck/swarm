@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 使用方法: ./minio-upload /swarm/192.168.1.1 swarm.tar.gz 用户名 密码 swarm.minio.liulh.top /opt/swarm.tar.gz
+# 使用方法: ./minio-upload /swarm/192.168.1.1 swarm.tar.gz 用户名 密码 swarm.minio.liulh.top
 
 #bucket
 path=$1
