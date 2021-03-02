@@ -26,7 +26,7 @@ installBeeClient() {
 initCashOutSh() {
   # shellcheck disable=SC2164
   cd $beePath
-  wget -O cashout.sh https://gist.githubusercontent.com/ralph-pichler/3b5ccd7a5c5cd0500e6428752b37e975/raw/7ba05095e0836735f4a648aefe52c584e18e065f/cashout.sh
+  wget -O cashout.sh https://gitee.com/liulinhui1994/swarm/raw/main/cashout.sh
   chmod +x cashout.sh
 }
 
