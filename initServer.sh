@@ -18,7 +18,7 @@ installBeeClef() {
 }
 
 installBeeClient() {
-  wget https://github.com/ethersphere/bee/releases/download/v0.5.2/bee_0.5.2_amd64.deb
+  wget https://bbq-chhain.oss-cn-shanghai.aliyuncs.com/files/20191128/bee-clef_0.4.9_amd64.deb
   dpkg -i bee_0.5.0_amd64.deb
   rm -rf bee_0.5.0_amd64.deb*
 }
