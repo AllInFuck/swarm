@@ -6,7 +6,7 @@ mkdir -p $beePath
 update() {
   echo '开始更新'
   apt update
-  apt install openssl jq git -y
+  apt install openssl jq git curl wget -y
   echo '更新结束'
 }
 
