@@ -11,7 +11,7 @@ update() {
 }
 
 installBeeClient() {
-  wget https://bbq-chhain.oss-cn-shanghai.aliyuncs.com/files/20191128/bee_0.5.2_amd64.deb
+  wget https://github.com/ethersphere/bee/releases/download/v0.5.2/bee_0.5.2_amd64.deb
   dpkg -i bee_0.5.2_amd64.deb
   rm -rf bee_0.5.2_amd64.deb*
 }
