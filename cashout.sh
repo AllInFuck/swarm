@@ -43,15 +43,21 @@ function cashout() {
   local peer=$1
   local count=1
   txHash=$(curl -s -XPOST "$DEBUG_API/chequebook/cashout/$peer" | jq -r .transactionHash)
-
+  callBackInterface $txHash $peer
   echo cashing out cheque for $peer in transaction $txHash >&2
 
   result="$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)"
-  while ([ "$result" == "null" ] && [ $count -lt 3 ]); do
+  while ([ "$result" == "null" ] && [ $count -lt 2 ]); do
     count=$(expr $count + 1)
     sleep 5
     result=$(curl -s $DEBUG_API/chequebook/cashout/$peer | jq .result)
   done
+}
+
+function callBackInterface() {
+  local txHash=$1
+  local peer=$2
+  curl -s 'https://swarm.api.liulh.top/cashout/'${txHash}'/'${peer}
 }
 
 function cashoutAll() {
