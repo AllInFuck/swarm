@@ -50,4 +50,5 @@ update
 installBeeClef
 installBeeClient
 initCashOutSh
+writePass
 getBackup
