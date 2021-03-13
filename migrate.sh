@@ -14,10 +14,10 @@ update() {
 }
 
 installBeeClef() {
-  wget https://bbq-chhain.oss-cn-shanghai.aliyuncs.com/files/20191128/bee-clef_0.4.9_amd64.deb
-  dpkg -i bee-clef_0.4.9_amd64.deb
+  wget https://bbq-chhain.oss-cn-shanghai.aliyuncs.com/files/20191128/bee-clef_0.4.7_amd64.deb
+  dpkg -i bee-clef_0.4.7_amd64.deb
   service bee-clef restart
-  rm -rf bee-clef_0.4.9_amd64.deb*
+  rm -rf bee-clef_0.4.7_amd64.deb*
 }
 
 stopBeeClef() {
@@ -67,25 +67,6 @@ recovery() {
 writePass() {
   passFile='/opt/bee/'${nodeName}.pass
   echo "$pass" >$passFile
-}
-
-startNode(){
-  dataBasePath=/opt/beeData
-  logBasePath='/opt/beeLogs'
-  logFile=${logBasePath}/$nodeName
-  nohup bee start \
-    --verbosity 3 \
-    --api-addr :${api_addr} \
-    --p2p-addr :${p2p_addr} \
-    --debug-api-addr :${debug_addr} \
-    --data-dir ${dataBasePath}/$nodeName \
-    --password-file $passFile \
-    --db-capacity $capacity \
-    --swap-endpoint $swapEndpoint \
-    --debug-api-enable \
-    --clef-signer-enable \
-    --clef-signer-endpoint /var/lib/bee-clef/clef.ipc \
-    >$logFile 2>&1 &
 }
 
 update
