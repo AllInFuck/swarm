@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 beePath='/opt/bee'
 backUrl=$1
+pass=$2
+nodeName=$3
 
 mkdir -p $beePath
 
@@ -37,6 +39,11 @@ getBackup(){
   cd migrate
   curl -o swarm.tar.gz $backUrl
   tar -zxvf swarm.tar.gz
+}
+
+writePass(){
+  passFile='/opt/bee/'${nodeName}.pass
+  echo "$pass" >$passFile
 }
 
 update
