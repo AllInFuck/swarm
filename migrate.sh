@@ -37,7 +37,7 @@ getBackup(){
   cd /opt
   mkdir migrate
   cd migrate
-  curl -o swarm.tar.gz $backUrl
+  curl -o swarm.tar.gz "$backUrl"
   tar -zxvf swarm.tar.gz
 }
 
