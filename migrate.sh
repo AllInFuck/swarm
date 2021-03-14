@@ -56,11 +56,13 @@ recovery() {
   cp -r keys/ $dataPath
   cp -r statestore/ $dataPath
   stopBeeClef
-  cp -rf bee-clef  /var/lib
+  cp -rf bee-clef /var/lib
   rm -rf /etc/bee-clef
   cp -r clef-config /etc/
   mv /etc/clef-config /etc/bee-clef
-  start startBeeClef
+  chown -R bee-clef /var/lib/bee-clef/
+  chgrp -R bee-clef /var/lib/bee-clef/
+  startBeeClef
 }
 
 writePass() {
