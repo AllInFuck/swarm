@@ -66,3 +66,6 @@ start() {
     --db-capacity $capacity \
     --debug-api-enable
 }
+
+init
+start
