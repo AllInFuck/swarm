@@ -21,6 +21,9 @@ installBeeClient() {
   wget https://bbq-chhain.oss-cn-shanghai.aliyuncs.com/files/20191128/bee_0.5.2_amd64.deb
   dpkg -i bee_0.5.2_amd64.deb
   rm -rf bee_0.5.2_amd64.deb*
+  sleep 3
+  service bee stop
+  systemctl disable bee.service
 }
 
 initCashOutSh() {

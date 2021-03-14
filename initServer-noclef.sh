@@ -14,6 +14,9 @@ installBeeClient() {
   wget https://github.com/ethersphere/bee/releases/download/v0.5.2/bee_0.5.2_amd64.deb
   dpkg -i bee_0.5.2_amd64.deb
   rm -rf bee_0.5.2_amd64.deb*
+  sleep 3
+  service bee stop
+  systemctl disable bee.service
 }
 
 initCashOutSh() {

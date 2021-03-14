@@ -41,7 +41,7 @@ swapEndpoint=$6
 passFile='/opt/bee/'${nodeName}.pass
 
 killOld() {
- sudo kill -9 $(pidof bee)
+  sudo kill -9 $(pidof bee)
 }
 
 initNode() {
