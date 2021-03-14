@@ -56,9 +56,8 @@ recovery() {
   cp -r keys/ $dataPath
   cp -r statestore/ $dataPath
   stopBeeClef
+  cp -rf bee-clef  /var/lib
   rm -rf /etc/bee-clef
-  rm -rf /var/lib/bee-clef
-  cp -r bee-clef /var/lib
   cp -r clef-config /etc/
   mv /etc/clef-config /etc/bee-clef
   start startBeeClef
