@@ -1,10 +1,20 @@
 #!/usr/bin/env sh
 beePath='/opt/bee'
+logBasePath='/opt/beeLogs'
+dataBasePath='/opt/beeData'
+ethAddressFile='/opt/bee/ethAddress'
+peerAddressFile='/opt/bee/peerAddress'
 backUrl=$1
 pass=$2
 nodeName=$3
+capacity=$4
+swapEndpoint=$5
 
+mkdir -p $ethAddressFile
+mkdir -p $peerAddressFile
 mkdir -p $beePath
+
+passFile='/opt/bee/'${nodeName}.pass
 
 update() {
   echo '开始更新'
@@ -65,8 +75,33 @@ recovery() {
   startBeeClef
 }
 
+startNode() {
+  logFile=${logBasePath}/$nodeName
+  nohup bee start \
+    --verbosity 3 \
+    --api-addr :1633 \
+    --p2p-addr :1634 \
+    --debug-api-addr :1635 \
+    --data-dir ${dataBasePath}/$nodeName \
+    --password-file $passFile \
+    --db-capacity $capacity \
+    --swap-endpoint $swapEndpoint \
+    --debug-api-enable \
+    --clef-signer-enable \
+    --clef-signer-endpoint /var/lib/bee-clef/clef.ipc \
+    >$logFile 2>&1 &
+
+  sleep 10
+  #写入地址
+  ethAddress=$(cat $logFile | grep "using ethereum address" | awk '{print $6}')
+  echo '以太坊地址：'ethetheth0x${ethAddress}ethetheth
+  echo "$ethAddress" >$ethAddressFile/$nodeName
+  peerAddress=$(cat $logFile | grep "using swarm network address through clef" | awk '{print $9}')
+  echo '节点地址：'peerpeerpeer${peerAddress}peerpeerpeer
+  echo "$peerAddress" >$peerAddressFile/$nodeName
+}
+
 writePass() {
-  passFile='/opt/bee/'${nodeName}.pass
   echo "$pass" >$passFile
 }
 
@@ -76,3 +111,4 @@ installBeeClient
 initCashOutSh
 writePass
 getBackup
+startNode
