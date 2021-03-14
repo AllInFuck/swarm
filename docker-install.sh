@@ -53,6 +53,7 @@ start() {
   docker run -d \
     --restart=always \
     --name=$nodeName \
+    -m 3000M \
     -v $dataPath/$nodeName:/home/bee/.bee \
     -p $debug_addr:1635 \
     -p $p2p_addr:1634 \
