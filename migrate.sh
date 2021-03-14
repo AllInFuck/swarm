@@ -105,10 +105,10 @@ writePass() {
   echo "$pass" >$passFile
 }
 
-update
-installBeeClef
-installBeeClient
-initCashOutSh
-writePass
-getBackup
+#update
+#installBeeClef
+#installBeeClient
+#initCashOutSh
+#writePass
+#getBackup
 startNode
