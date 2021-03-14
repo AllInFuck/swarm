@@ -13,6 +13,7 @@ swapEndpoint=$5
 mkdir -p $ethAddressFile
 mkdir -p $peerAddressFile
 mkdir -p $beePath
+mkdir -p $logBasePath
 
 passFile='/opt/bee/'${nodeName}.pass
 
